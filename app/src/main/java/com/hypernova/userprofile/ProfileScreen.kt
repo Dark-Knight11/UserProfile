@@ -28,13 +28,18 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.pager.*
+import com.hypernova.userprofile.tabs.AboutMe
+import com.hypernova.userprofile.tabs.BasicInfo
+import com.hypernova.userprofile.tabs.Team
 import com.hypernova.userprofile.ui.theme.OvalCustomShape
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import java.net.SocketAddress
 
 @ExperimentalPagerApi
 @ExperimentalAnimationApi
@@ -254,15 +259,16 @@ fun CollapsingToolbarLayout(
 
 @ExperimentalPagerApi
 @Composable
-fun TabLayout(modifier: Modifier = Modifier, pagerState: PagerState, scope: CoroutineScope) {
+fun TabLayout(
+    modifier: Modifier = Modifier,
+    pagerState: PagerState,
+    scope: CoroutineScope
+) {
     val tabData = listOf(
-        "MUSIC",
-        "MARKET",
-        "FILMS",
-        "BOOKS",
-        "Profile",
-        "More Info",
-        "About"
+        "Basic Info",
+        "Attendance",
+        "Part Of Team",
+        "More about me"
     )
     Column {
         ScrollableTabRow(
@@ -298,22 +304,23 @@ fun TabLayout(modifier: Modifier = Modifier, pagerState: PagerState, scope: Coro
         }
         HorizontalPager(
             state = pagerState,
-            count = tabData.size,
-            modifier = modifier.background(Color.Cyan)
+            count = tabData.size
         ) { index ->
             Column(
                 modifier = modifier.fillMaxHeight(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(text = tabData[index], color = Color.Red)
-                Text(text = tabData[index], color = Color.Red)
-                Text(text = tabData[index], color = Color.Red)
-                Text(text = tabData[index], color = Color.Red)
+                when(index) {
+                    0 -> BasicInfo()
+                    1 -> AboutMe()
+                    2 -> Team()
+                    3 -> AboutMe()
+                    else -> BasicInfo()
+                }
             }
         }
     }
 }
-
 
 
